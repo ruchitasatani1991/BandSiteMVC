@@ -4,6 +4,55 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
+<div id="formsection">
+
+    <div>@ViewBag.Message</div>
+    <form method="post" id="contactForm">
+        <textarea data-bind="value:message,valueUpdate:'input'" id="message" name="message" maxlength="50"></textarea>
+        <input type="submit" value="send" />
+        <p><span data-bind="text:charactersRemaining"></span> Characters remaining</p>
+        <p>
+            <img src="~/Images/progress.gif" id="progress" style="display:none;">
+        </p>
+    </form>
+</div>
+@section scripts{
+
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+    <script>
+        function contactViewModel() {
+            var self = this;
+            self.message = ko.observable('');
+            self.charactersRemaining = ko.computed(function () { return 50 - self.message().length;})
+        }
+        ko.applyBindings(new contactViewModel());
+    </script>
+
+
+    <script>
+        $('#contactForm').submit(function () {
+            $('#progress').show();
+            $.post('', { message: $('#message').val() })
+                .done(function (respons e) {
+                    setTimeout(function () { $('#formsection').html(response); }, 2000);
+                });
+            return false;
+        });
+    </script>
+}
+
+@*<div id="formsection">
+        @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "formsection" }))
+        {
+            <div>@ViewBag.Message</div>
+            <textarea id="message" name="message"></textarea>
+            <input type="submit" value="send" />
+        }
+        @section scripts{
+
+            <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+        }
+    </div>*@
 <address>
     One Microsoft Way<br />
     Redmond, WA 98052-6399<br />

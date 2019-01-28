@@ -1,7 +1,26 @@
 ﻿@{
     ViewBag.Title = "About";
+    var favoritecolor = "blue";
 }
 <h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-
+<div style="color:@favoritecolor";>@ViewBag.Message</div>
+<br/>
+you are using @Request.Browser.Browser, and thats ok!
 <p>Use this area to provide additional information.</p>
+
+@{ var amounts = new List<decimal> { 100, 25.3m, -99, 10 };}
+<ul>
+    @foreach (var a in amounts)
+    {
+        <li>@formatamount(a)</li>
+    }
+</ul>
+
+    @helper formatamount(decimal amt) {
+        var color = "green";
+        if (amt < 0)
+{
+    color = "red";
+}
+<span style="color:@color">@string.Format("{0:C}",amt)</span>
+}
