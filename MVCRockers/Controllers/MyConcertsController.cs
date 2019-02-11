@@ -10,6 +10,7 @@ using MVCRockers.Models;
 
 namespace MVCRockers.Controllers
 {
+    [Authorize]
     public class MyConcertsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
